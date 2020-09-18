@@ -3,6 +3,7 @@ import morgan from "morgan";
 import helmet from "helmet";
 import bodyParser from "body-parser";
 import cookieParser from "cookie-parser";
+import { useRouter, userRouter } from "./router";
 
 //윗줄이 최신문법. const express = require("express"); //express를 불러옴
 //babel이 es6문법을 과거 버전으로 변형해줌.
@@ -17,9 +18,9 @@ const app = express(); // express를 실행
 
 const PORT = 4000;
 
-function handleListening() {
-  console.log(`Listening on: http://localhost:${PORT}`);
-}
+// function handleListening() {
+//   console.log(`Listening on: http://localhost:${PORT}`);
+// }
 
 const handleHome = (request, response) => response.send("Hello from home");
 
@@ -50,5 +51,11 @@ app.use(betweenHome);
 //main url로 접근시(route생성) handleHome응답
 app.get("/", handleHome);
 
-//listening하기 시작할 때 handleListening호출
-app.listen(PORT, handleListening);
+//router에 접근했을 때 router.js의 userRouter실행
+app.use("/user", userRouter);
+
+// //listening하기 시작할 때 handleListening호출
+// app.listen(PORT, handleListening);
+
+/*다른 파일에서 코드를 가져다쓰기 위함 */
+export default app;
